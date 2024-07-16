@@ -1,64 +1,67 @@
-import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
-import * as DocumentPicker from 'expo-document-picker';
+// App.js
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
+import { convertNumberToWords } from '../../components/Convert';
+import HomePage from '../../components/HomePage';
 
 export default function App() {
-  const pickDocument = async () => {
-    try {
-      let result = await DocumentPicker.getDocumentAsync({
-        type: 'audio/*',
-      });
+    const [number, setNumber] = useState('');
+    const [result, setResult] = useState('');
 
-      if (result.uri) {
-        const fileUri = result.uri;
-        const fileName = result.name || 'audio.mp3'; // Default name if not provided
-        const fileType = 'audio/mpeg'; // MIME type for MP3 files
-
-        console.log('File URI:', fileUri);
-        console.log('File Name:', fileName);
-
-        // Example: Upload the selected file to your server
-        // Replace 'http://your-server-ip:5000/convert' with your actual server endpoint
-        const formData = new FormData();
-        formData.append('file', {
-          uri: fileUri,
-          name: fileName,
-          type: fileType,
-        });
-
-        try {
-          let response = await fetch('http://localhost:5001/convert', {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-
-          let jsonResponse = await response.json();
-          console.log('Server Response:', jsonResponse); // Log response from the server
-        } catch (error) {
-          console.error('Error uploading file:', error);
+    const handleConvert = () => {
+        const num = parseInt(number, 10);
+        if (!isNaN(num)) {
+            setResult(convertNumberToWords(num));
+        } else {
+            setResult('Veuillez entrer un nombre valide.');
         }
-      } else {
-        console.log('Document picking cancelled or failed');
-      }
-    } catch (error) {
-      console.error('Error picking document:', error);
-    }
-  };
+    };
 
-  return (
-    <View style={styles.container}>
-      <Button title="Pick an Audio File" onPress={pickDocument} />
-    </View>
-  );
+    return (
+       <>
+       	
+       
+       	<HomePage />
+       {/** <View style={styles.container}>
+            <Text style={styles.title}>Convertir Chiffres en Lettres</Text>
+            <TextInput
+                style={styles.input}
+                keyboardType="numeric"
+                placeholder="Entrez un nombre"
+                value={number}
+                onChangeText={setNumber}
+            />
+            <Button title="Convertir" onPress={handleConvert} />
+            {result ? <Text style={styles.result}>{result}</Text> : null}
+        </View>
+        */
+        }
+        </>
+    );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+    container: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
+    title: {
+        fontSize: 24,
+        marginBottom: 20,
+    },
+    input: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginBottom: 20,
+        paddingHorizontal: 10,
+        width: '80%',
+    },
+    result: {
+        marginTop: 20,
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
 });

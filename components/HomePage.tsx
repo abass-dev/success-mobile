@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { StyleSheet, Image, Platform } from 'react-native';
-import SGallery from "@/components/SGallery"
+import { StyleSheet, Image, Platform, ImageBackground } from 'react-native';
+import ActionButton from 'react-native-circular-action-menu';
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
@@ -9,14 +9,20 @@ import { ThemedView } from '@/components/ThemedView';
 
 export default function TabTwoScreen() {
   return (
-  	<>
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
-      headerImage={<Ionicons size={310} name="code-slash" style={styles.headerImage} />}>
+      headerBackgroundColor={{ light: '#03325e', dark: '#025198' }}
+      headerImage={ <>
+        	<Image source={require('@/assets/images/success-logo.png')} style={styles.headerImage} />
+      	</>
+      	}>
+      
       <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Explore</ThemedText>
+        <ThemedText type="subtitle">Bienvenue Chez Success Com Niger</ThemedText>
       </ThemedView>
-      <ThemedText>This app includes example code to help you get started.</ThemedText>
+      <ThemedText>Nous vous accompagnons dans la création de formats créatifs
+      (vidéos d'interviews, films d'entreprise, motion design ou contenus pour
+      les réseaux sociaux) pour la communication de votre
+      entreprise.</ThemedText>
       <Collapsible title="File-based routing">
         <ThemedText>
           This app has two screens:{' '}
@@ -33,7 +39,7 @@ export default function TabTwoScreen() {
       </Collapsible>
       <Collapsible title="Android, iOS, and web support">
         <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the web version, press{' '}
+        	
           <ThemedText type="defaultSemiBold">w</ThemedText> in the terminal running this project.
         </ThemedText>
       </Collapsible>
@@ -81,21 +87,26 @@ export default function TabTwoScreen() {
             <ThemedText>
               The <ThemedText type="defaultSemiBold">components/ParallaxScrollView.tsx</ThemedText>{' '}
               component provides a parallax effect for the header image.
-  	        </ThemedText>
+            </ThemedText>
           ),
         })}
       </Collapsible>
+     {/** <ActionButton buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
+          </ActionButton.Item>
+      </ActionButton> **/}
     </ParallaxScrollView>
-    </>
   );
 }
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
-    position: 'absolute',
+    top: 50,
+    left: "25%",
+    width: 200,
+    height: 170,
+    resizeMode: 'stretch',
+    position: 'absolute'
   },
   titleContainer: {
     flexDirection: 'row',

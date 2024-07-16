@@ -4,7 +4,7 @@ import React from 'react';
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
-
+import { FontAwesome } from '@expo/vector-icons';
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
@@ -32,6 +32,25 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="numberToWord"
+        options={{
+          title: 'Number To Word',
+          tabBarIcon: ({ color, focused }) => (
+           <FontAwesome name="exchange" size={28} color={color}/> 
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="imageGallery"
+        options={{
+          title: 'Gallery',
+          tabBarIcon: ({ color, focused }) => (
+           <FontAwesome name="camera" size={24} color={color}/> 
+          ),
+        }}
+      />
+      
     </Tabs>
   );
 }
