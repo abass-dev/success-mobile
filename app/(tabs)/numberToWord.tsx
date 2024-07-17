@@ -1,13 +1,16 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { FaCopy } from "react-icons/fa";
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import { convertNumberToWords } from '../../components/Convert';
+import { Image, StyleSheet, TouchableOpacity, Text, View, TextInput, Button } from 'react-native';
+import { Fr as ConverFr } from '@/components/number-to-word/Fr';
 import { FontAwesome } from '@expo/vector-icons';
 import * as Clipboard from 'expo-clipboard';
 import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
+import {Colors} from '@/constants/Colors'
+import { SiConvertio } from "react-icons/si";
 
 export default function NumberToWord() {
 	    const [number, setNumber] = useState('');
@@ -30,7 +33,7 @@ const capitalizeFirstLetter = (string) => {
     const handleConvert = () => {
         const num = parseInt(number, 10);
         if (!isNaN(num)) {
-            setResult(capitalizeFirstLetter(convertNumberToWords(num)));
+            setResult(capitalizeFirstLetter(ConverFr(num)));
         } else {
             setResult('Veuillez entrer un nombre valide.');
         }
@@ -39,13 +42,25 @@ const capitalizeFirstLetter = (string) => {
   return (
     <ParallaxScrollView
       headerHeigth={10}
-      headerBackgroundColor={{ light: '#D0D0D0', dark: '#353636' }}
+      headerBackgroundColor={{ light: Colors.successPrimary.background, dark: '#353636' }}
       headerImage={
-      <FontAwesome size={350} name="exchange" style={styles.headerImage} />}>
+      <>
+      	
+      <FontAwesome size={200} name="exchange" style={styles.headerImage} />
+      <FontAwesome size={400} name="exchange" style={{position: "absolute",
+      color: "#ffffff10", top: -10}} />
+      </>
+      	
+      }>
     
-            <View style={styles.container}>
-            <Text style={styles.title}>Convertir Chiffres en
-            Lettres</Text>
+            <ThemedView>
+            	
+            <ThemedView style={styles.titleContainer}>
+            <ThemedText style={styles.title} type="title" >Chiffres en lettres</ThemedText>
+            <ThemedText>Par Success Com Niger</ThemedText>
+            </ThemedView>
+            	
+            <ThemedView style={styles.inputContainer}>
             <TextInput
                 style={styles.input}
                 keyboardType="numeric"
@@ -53,15 +68,17 @@ const capitalizeFirstLetter = (string) => {
                 value={number}
                 onChangeText={setNumber}
             />
-            <Button title="Convertir" onPress={handleConvert} />
+            <TouchableOpacity>
+            <FontAwesome style={styles.convertBtn} size={24} name="exchange" onPress={handleConvert} />
+            </TouchableOpacity>
+            </ThemedView>
             {result ? 
-            <>
-            	<FaCopy  onPress={copyToClipboard} />
-  
-            <Text style={styles.result}>{result}</Text> 
-            </>
+            <ThemedView style={styles.resultContainer}>
+            <ThemedText style={styles.result}>{result}</ThemedText> 
+           	<Ionicons color="#03325e" size={24} name="copy-outline" onPress={copyToClipboard} />
+            </ThemedView>
             : null}
-        </View>
+        </ThemedView>
         
      </ParallaxScrollView>
   );
@@ -69,14 +86,34 @@ const capitalizeFirstLetter = (string) => {
 
 const styles = StyleSheet.create({
   headerImage: {
-    color: '#808080',
-    bottom: -90,
-    left: -35,
+    color: '#ffffff',
+    top: 20,
     position: 'absolute',
   },
   titleContainer: {
-    flexDirection: 'row',
-    gap: 8,
+    flex:1,
+    alignItems: "center",
+    marginBottom:40
+  },
+    title: {
+    	color: Colors.successPrimary.text
+    },
+  inputContainer: {
+  	flex: 1,
+  	gap:8,
+  	flexDirection: "row",
+  	alignItems: "center",
+  },
+  convertBtn: {
+  	color: "#03325e"
+  },
+  resultContainer: {
+  	flex: 1,
+  	flexDirection: "row",
+  	borderWidth: 1,
+  	borderColor: "#03325e10",
+  	marginTop: 20,
+  	padding: 5,
   },
       container: {
         flex: 1,
@@ -84,19 +121,16 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         backgroundColor: '#fff',
     },
-    title: {
-        fontSize: 24,
-        marginBottom: 20,
-    },
     input: {
+    	flex:1,
         height: 40,
-        borderColor: 'gray',
+        borderColor: '#03325e',
         borderWidth: 1,
-        marginBottom: 20,
         paddingHorizontal: 10,
-        width: '80%',
+        
     },
     result: {
+      	flex: 2,
         marginTop: 20,
         fontSize: 18,
         fontWeight: 'bold',

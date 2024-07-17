@@ -3,7 +3,7 @@ const teens = ["dix", "onze", "douze", "treize", "quatorze", "quinze", "seize", 
 const tens = ["", "dix", "vingt", "trente", "quarante", "cinquante", "soixante", "soixante-dix", "quatre-vingt", "quatre-vingt-dix"];
 const scales = ["", "mille", "million", "milliard", "billion", "billiard", "trillion"];
 
-const convertNumberToWords = (number) => { 
+const Fr = (number) => { 
     if (number === 0) return "zéro";
 
     let result = '';
@@ -40,6 +40,7 @@ const convertChunk = (number) => {
         if (number > 0) {
             if (tensIndex === 7 || tensIndex === 9) {
                 result += '-' + teens[number];
+                result = result.replace("-dix", "")
             } else {
                 result += '-' + units[number];
             }
@@ -53,4 +54,4 @@ const convertChunk = (number) => {
     return result;
 };
 
-export { convertNumberToWords };
+export { Fr };

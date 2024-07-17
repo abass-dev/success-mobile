@@ -6,6 +6,7 @@ import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
+import { Link } from 'expo-router';
 
 export default function TabTwoScreen() {
   return (
@@ -91,10 +92,7 @@ export default function TabTwoScreen() {
           ),
         })}
       </Collapsible>
-     {/** <ActionButton buttonColor="rgba(231,76,60,1)">
-          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("notes tapped!")}>
-          </ActionButton.Item>
-      </ActionButton> **/}
+      
     </ParallaxScrollView>
   );
 }

@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, Image, TouchableOpacity, StyleSheet } from 'react-native';
 import ImageView from 'react-native-image-viewing';
+import { FontAwesome } from '@expo/vector-icons';
+import ParallaxScrollView from "./ParallaxScrollView"
+import { Colors } from "@/constants/Colors"
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
 
 const SGallery = () => {
   const images = [
@@ -24,6 +29,24 @@ const SGallery = () => {
   );
 
   return (
+  	<>
+  		
+  	<ParallaxScrollView
+      headerBackgroundColor={{ light: Colors.successPrimary.background, dark: '#353636' }}
+      headerImage={
+      <>
+      <FontAwesome size={200} name="photo" style={styles.headerImage} />
+      <FontAwesome size={300} name="photo" style={{position: "absolute",
+      color: "#ffffff10", top: 10}} />
+      </>
+      	
+      }>
+      <ThemedView style={styles.titleContainer}>
+            <ThemedText style={styles.title} type="title" >Nos Affiches</ThemedText>
+            <ThemedText>Par Success Com Niger</ThemedText>
+            </ThemedView>
+            
+      </ParallaxScrollView>
     <View style={styles.container}>
       <FlatList
         data={images}
@@ -43,14 +66,29 @@ const SGallery = () => {
         onRequestClose={() => setIsVisible(false)}
       />
     </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
+	  titleContainer: {
+    flex:1,
+    alignItems: "center",
+    marginBottom:40
+  },
+    title: {
+    	color: Colors.successPrimary.text
+    },
+	 headerImage: {
+    color: '#ffffff',
+    top: 40,
+    left:5,
+    position: 'absolute',
+  },
   container: {
     flex: 1,
     alignItems: "center",
-    marginTop: 20,
+    backgroundColor: "#ffffff"
   },
   thumbnail: {
     width: 100,
