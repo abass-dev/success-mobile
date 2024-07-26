@@ -1,7 +1,9 @@
 import { Picker } from '@react-native-picker/picker';
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
-
+import { Button, StyleSheet } from 'react-native';
+import { TextInput } from "react-native-paper"
+import { ThemedText } from "@/components/ThemedText"
+import { ThemedView } from "@/components/ThemedView"
 const API_URL = 'https://api.exchangerate-api.com/v4/latest/USD';
 
 const CurrencyConverter = () => {
@@ -43,7 +45,7 @@ const CurrencyConverter = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <ThemedView style={styles.container}>
       <Picker
         style={{backgroundColor: "#00000010"}}
         selectionColor="#03325e"
@@ -54,36 +56,34 @@ const CurrencyConverter = () => {
         <Picker.Item label="FCFA" value="FCFA" />
         <Picker.Item label="USD" value="USD" />
       </Picker>
-      <Text>Exchange rate: 1 USD = {exchangeRates.FCFA} FCFA</Text>
+      <ThemedText>Exchange rate: 1 USD = {exchangeRates.FCFA} FCFA</ThemedText>
       
       <TextInput
-        style={styles.input}
-        placeholder="Enter amount"
+        //style={styles.input}
+        mode="outlined"
+        label="Enter amount"
         keyboardType="numeric"
         value={amount}
         onChangeText={setAmount}
       />
       <Button title="Convert" onPress={handleConvert} />
-      <Text>
+      <ThemedText>
         Converted amount: {convertedAmount} {selectedCurrency === 'FCFA' ? 'USD' : 'FCFA'}
-      </Text>
-    </View>
+      </ThemedText>
+    </ThemedView>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     padding: 0,
   },
   input: {
     height: 40,
-    borderColor: '#03325e',
     borderWidth: 1,
     marginTop: 20,
     marginBottom: 20,
     paddingHorizontal: 10,
   },
 });
-
 
 export default CurrencyConverter;

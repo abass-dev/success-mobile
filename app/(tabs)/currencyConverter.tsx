@@ -25,7 +25,7 @@ export default function TabTwoScreen() {
       	
       }>
       <ThemedView style={styles.titleContainer}>
-      <ThemedText style={styles.title} type="title" >Chiffres en lettres</ThemedText>
+      <ThemedText type="title" >Currency Converter</ThemedText>
       <ThemedText>Par Success Com Niger</ThemedText>
       </ThemedView>
   	<CurrencyConverter />

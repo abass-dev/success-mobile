@@ -8,14 +8,6 @@ import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import Logo from "@/assets/images/success-logo.svg"
 import Svg, { Path } from "react-native-svg"
-const SvgComponent = (props) => (
-  <Svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" {...props}>
-    <Path
-      fill="#09f"
-      d="m0 96 48-5.3C96 85 192 75 288 74.7c96 .3 192 10.3 288 16 96 5.3 192 5.3 288 26.6 96 21.7 192 63.7 288 48 96-16.3 192-90.3 240-128L1440 0v320H0Z"
-    />
-  </Svg>
-)
 
 
 const SGallery = () => {
@@ -40,24 +32,6 @@ const SGallery = () => {
   );
 
   return (
-  	<>
-  	<ParallaxScrollView
-      headerBackgroundColor={{ light: Colors.successPrimary.background, dark: '#353636' }}
-      headerImage={
-      <>
-      <FontAwesome size={200} name="photo" style={styles.headerImage} />
-      <FontAwesome size={300} name="photo" style={{position: "absolute",
-      color: "#ffffff10", top: 10}} />
-  		
-      </>
-      	
-      }>
-      <ThemedView style={styles.titleContainer}>
-            <ThemedText style={styles.title} type="title" >Nos Affiches</ThemedText>
-            <ThemedText>Par Success Com Niger</ThemedText>
-            </ThemedView>
-            
-      </ParallaxScrollView>
     <View style={styles.container}>
       <FlatList
         data={images}
@@ -77,7 +51,6 @@ const SGallery = () => {
         onRequestClose={() => setIsVisible(false)}
       />
     </View>
-    </>
   );
 };
 

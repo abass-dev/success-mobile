@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Button } from 'react-native';
-import HomePage from '@/components/HomePage';
-import SplashScreens from '@/components/SplashScreens';
+import Home from '@/components/Home';
+import WavyHeader from '@/components/WavyHeader';
 
 export default function App() {
-    return <SplashScreens />
+    return (
+      <>
+      <Home />
+      <WavyHeader />
+      
+      </>
+      )
 }
-
-const styles = StyleSheet.create({});

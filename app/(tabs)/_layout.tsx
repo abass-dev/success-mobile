@@ -1,5 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { Image } from "react-native"
 import { MaterialIcons } from '@expo/vector-icons';
 import { SiConvertio } from "react-icons/si";
 import { TabBarIcon } from '@/components/navigation/TabBarIcon';
@@ -21,7 +22,8 @@ export default function TabLayout() {
         options={{
           title: 'Home',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'home' : 'home-outline'} color={color} />
+          
+          <Image style={{width:32, height:26}} source={require("@/assets/images/success-logo.png")} />
           ),
         }}
       />

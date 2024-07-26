@@ -5,18 +5,20 @@ import { Collapsible } from '@/components/Collapsible';
 import { ExternalLink } from '@/components/ExternalLink';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
+import SCarousel from '@/components/SCarousel';
 import { ThemedView } from '@/components/ThemedView';
 import { Link } from 'expo-router';
-
+import { Colors } from "@/constants/Colors"
 export default function TabTwoScreen() {
   return (
+    <>
     <ParallaxScrollView
-      headerBackgroundColor={{ light: '#03325e', dark: '#025198' }}
+      headerBackgroundColor={{ light: Colors.successPrimary.background, dark: Colors.dark.background }}
       headerImage={ <>
       	<Image source={require("@/assets/images/success-logo.png")} style={styles.headerImage} />
       	</>
       	}>
-      
+
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="subtitle">Bienvenue Chez Success Com Niger</ThemedText>
       </ThemedView>
@@ -94,6 +96,8 @@ export default function TabTwoScreen() {
       </Collapsible>
       
     </ParallaxScrollView>
+          <SCarousel />
+    </>
   );
 }
 

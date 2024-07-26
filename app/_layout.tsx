@@ -6,12 +6,18 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import CircularMenu from "@/components/CircularMenu"
+import { Colors } from "@/constants/Colors"
 import { useColorScheme } from '@/hooks/useColorScheme';
+import 'react-native-gesture-handler';
+import { enableScreens } from 'react-native-screens';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 //setTimeout(SplashScreen.hideAsync, 900000);
+enableScreens();
+
 export default function RootLayout() {
+  
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
@@ -31,7 +37,9 @@ export default function RootLayout() {
   	<>
   		
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <StatusBar style="ligth" />
+      <StatusBar backgroundColor={colorScheme === "dark" ?
+      Colors.light.background : Colors.successPrimary.background} style={colorScheme ===
+      "dark" ? "dark" : "light"}/>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />

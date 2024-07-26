@@ -47,11 +47,48 @@ const CircularMenu = () => {
         >
           <Icon name="delete" style={styles.actionButtonIcon} />
         </ActionButton.Item>
+        <ActionButton.Item
+          buttonColor={Colors.successPrimary.text}
+          title="Delete"
+          onPress={() => console.log('Delete button pressed')}
+        >
+          <Icon name="delete" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
+        <ActionButton.Item
+          buttonColor={Colors.successPrimary.text}
+          title="Delete"
+          onPress={() => console.log('Delete button pressed')}
+        >
+          <Icon name="delete" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
+        <ActionButton.Item
+          buttonColor={Colors.successPrimary.text}
+          title="Delete"
+          onPress={() => console.log('Delete button pressed')}
+        >
+          <Icon name="delete" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
+        <ActionButton.Item
+          buttonColor={Colors.successPrimary.text}
+          title="Delete"
+          onPress={() => console.log('Delete button pressed')}
+        >
+          <Icon name="delete" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
+        <ActionButton.Item
+          buttonColor={Colors.successPrimary.text}
+          title="Delete"
+          onPress={() => console.log('Delete button pressed')}
+        >
+          <Icon name="delete" style={styles.actionButtonIcon} />
+        </ActionButton.Item>
       </ActionButton>
     </View>
   );
 
-
+<ViewView url="httlfk">
+	
+</ViewView>
 };
 
 const styles = StyleSheet.create({

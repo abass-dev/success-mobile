@@ -34,34 +34,6 @@ export default function SplashScreens() {
             // Parallel Animation...
             Animated.parallel([
                 Animated.timing(
-                    startAnimation,
-                    {
-                        // For same Height for non safe Area Devices...
-                        toValue: -Dimensions.get('window').height + (edges.top +
-                        50),
-                        useNativeDriver: true
-                    }
-                ),
-                Animated.timing(
-                    scaleLogo,
-                    {
-                        // Scaling to 0.35
-                        toValue: 0.3,
-                        useNativeDriver: true
-                    }
-                ),
-                Animated.timing(
-                    moveLogo,
-                    {
-                        // Moving to Right Most...
-                        toValue: {
-                            x: (Dimensions.get("window").width / 2) - 195,
-                            y: (Dimensions.get('window').height / 2) + 75
-                        },
-                        useNativeDriver: true
-                    }
-                ),
-                Animated.timing(
                     contentTransition,
                     {
                         toValue: 0,
@@ -71,7 +43,7 @@ export default function SplashScreens() {
             ])
                 .start();
 
-        }, 1000);
+        }, 500);
 
     }, [])
 
@@ -85,7 +57,8 @@ export default function SplashScreens() {
             left: 0,
             right: 0,
         }}>
-            <Animated.View style={{
+           {/**
+           <Animated.View style={{
                 flex: 1,
                 backgroundColor: BGColor,
                 zIndex: 1,
@@ -114,7 +87,7 @@ export default function SplashScreens() {
 
                 </Animated.View>
 
-            </Animated.View>
+            </Animated.View> **/ }
 
             <Animated.View style={{
                 position: 'absolute',
@@ -122,8 +95,8 @@ export default function SplashScreens() {
                 bottom: 0,
                 left: 0,
                 right: 0,
-                backgroundColor: 'rgba(0,0,0,0.04)',
-                zIndex: 2,
+                backgroundColor: '#03325e',
+                zIndex: 1,
                 transform: [
                     { translateY: contentTransition }
                 ]

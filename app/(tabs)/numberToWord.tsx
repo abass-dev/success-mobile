@@ -56,7 +56,7 @@ const capitalizeFirstLetter = (string) => {
             <ThemedView>
             	
             <ThemedView style={styles.titleContainer}>
-            <ThemedText style={styles.title} type="title" >Chiffres en lettres</ThemedText>
+            <ThemedText type="title" >Chiffres en lettres</ThemedText>
             <ThemedText>Par Success Com Niger</ThemedText>
             </ThemedView>
             	
@@ -95,9 +95,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom:40
   },
-    title: {
-    	color: Colors.successPrimary.text
-    },
   inputContainer: {
   	flex: 1,
   	gap:8,
