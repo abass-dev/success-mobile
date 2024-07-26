@@ -38,8 +38,8 @@ export default function RootLayout() {
   		
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <StatusBar backgroundColor={colorScheme === "dark" ?
-      Colors.light.background : Colors.successPrimary.background} style={colorScheme ===
-      "dark" ? "dark" : "light"}/>
+      Colors.dark.background : Colors.dark.background} style={colorScheme ===
+      "dark" ? "light" : "light"}/>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />

@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#ffffff"
   },
   thumbnail: {
     width: 100,

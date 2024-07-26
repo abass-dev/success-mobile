@@ -112,9 +112,8 @@ export default function Home() {
         }}>
             <Animated.View style={{
                 flex: 1,
-                backgroundColor: Colors.successPrimary.background,
+                backgroundColor: Colors.dark.background,
                 zIndex: 1,
-                evaluation:5,
                 transform: [
                     { translateY: startAnimation }
                 ]
@@ -171,7 +170,6 @@ export default function Home() {
             }}
             style={{
             flex: 1, 
-            resizeMode: 'contain',
             }}
             
             >

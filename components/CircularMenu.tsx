@@ -12,8 +12,7 @@ const CircularMenu = () => {
   return (
     <View style={styles.container}>
       <ActionButton
-        style={styles.actionButton}
-        buttonColor="#03325e"
+        buttonColor="black"
         outRangeScale={0.8}
         
         buttonTextStyle={styles.menuText}
@@ -29,6 +28,7 @@ const CircularMenu = () => {
         <ActionButton.Item
           buttonColor={Colors.successPrimary.text}
           title="Add"
+
           onPress={() => console.log('Add button pressed')}
         >
           <Icon name="add" style={styles.actionButtonIcon} />
@@ -47,48 +47,11 @@ const CircularMenu = () => {
         >
           <Icon name="delete" style={styles.actionButtonIcon} />
         </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor={Colors.successPrimary.text}
-          title="Delete"
-          onPress={() => console.log('Delete button pressed')}
-        >
-          <Icon name="delete" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor={Colors.successPrimary.text}
-          title="Delete"
-          onPress={() => console.log('Delete button pressed')}
-        >
-          <Icon name="delete" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor={Colors.successPrimary.text}
-          title="Delete"
-          onPress={() => console.log('Delete button pressed')}
-        >
-          <Icon name="delete" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor={Colors.successPrimary.text}
-          title="Delete"
-          onPress={() => console.log('Delete button pressed')}
-        >
-          <Icon name="delete" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor={Colors.successPrimary.text}
-          title="Delete"
-          onPress={() => console.log('Delete button pressed')}
-        >
-          <Icon name="delete" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
+  
       </ActionButton>
     </View>
   );
 
-<ViewView url="httlfk">
-	
-</ViewView>
 };
 
 const styles = StyleSheet.create({

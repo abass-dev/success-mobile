@@ -3,18 +3,18 @@ import { View } from "react-native";
 import Svg, { Path } from "react-native-svg";
 import { Colors } from "@/constants/Colors"
 
-export default function WavyFooter({ customStyles }) {
+export default function WavyFooter({ customStyles }: any) {
   return (
     <View style={customStyles}>
-      <View style={{ backgroundColor: Colors.successPrimary.background, height: 140 }}>
+      <View style={{ backgroundColor: Colors.dark.background, height: 170 }}>
         <Svg
-          height="70%"
+          height="60%"
           width="100%"
           viewBox="0 0 1440 320"
           style={{zIndex:1, position: "absolute", top: 120 }}
         >
           <Path
-            fill={Colors.successPrimary.background}
+            fill={Colors.dark.background}
             d="M0,96L48,112C96,128,192,160,288,186.7C384
             ,213,480,235,576,213.3C672,192,768,128,864,
             128C960,128,1056,192,1152,208C1248,224,1344,192,
@@ -24,14 +24,14 @@ export default function WavyFooter({ customStyles }) {
           />
         </Svg>
         <Svg
-          height="70%"
+          height="60%"
           width="100%"
           viewBox="0 0 1440 320"
           style={{ position: "absolute", top: 130 }}
         >
           <Path
             fill={
-           Colors.successPrimary.background + "99"
+           "#ffffff05"
               
             }
             d="M0,96L48,112C96,128,192,160,288,186.7C384

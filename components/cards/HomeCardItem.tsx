@@ -6,7 +6,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { useRouter } from "expo-router";
 
 
-const HomeCardItem = ({backgroundImage, iconName, iconColor, text, goTo}) => {
+const HomeCardItem = ({backgroundImage, Icon, iconName, iconColor, text, goTo}: any) => {
   const router = useRouter()
  return (
    <View 
@@ -32,7 +32,7 @@ const HomeCardItem = ({backgroundImage, iconName, iconColor, text, goTo}) => {
     android_ripple={{color: '#03325e', borderless: true}}
     onPress={() => router.replace(goTo ? goTo : "/")}
       >
-      <FontAwesome name={iconName} size={40} color={iconColor} />
+        {Icon}
       
       <Text style={{marginTop: 20, fontWeight: "bold", color: "#ffffff", fontSize:20}}>{text}</Text>
       </Pressable>
