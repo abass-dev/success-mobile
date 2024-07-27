@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "42775382076",
+    "project_id": "successcomniger-3581e",
+    "storage_bucket": "successcomniger-3581e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:42775382076:android:4f08340dc883fe1914db39",
+        "android_client_info": {
+          "package_name": "com.abassthedev.successaudiototext"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY4h6jH1wq0r7qqpilMpxWm2vtSN_Lgm4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

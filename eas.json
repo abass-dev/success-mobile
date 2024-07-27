@@ -4,31 +4,14 @@
   },
   "build": {
     "development": {
-      "distribution": "internal",
-      "android": {
-        "gradleCommand": ":app:assembleDebug"
-      },
-      "ios": {
-        "buildConfiguration": "Debug"
-      }
-    },
-    "preview": {
-      "android": {
-        "buildType": "apk"
-      },
+      "developmentClient": false,
       "distribution": "internal"
     },
-    "preview2": {
-      "android": {
-        "gradleCommand": ":app:assembleRelease"
-      }
-    },
-    "preview3": {
-      "developmentClient": true
+    "preview": {
+      "distribution": "internal"
     },
     "production": {}
   },
-
   "submit": {
     "production": {}
   }

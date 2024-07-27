@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Success Com Niger",
-    "slug": "success-com-niger",
+    "slug": "success-audio-to-text",
     "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/success-logo.png",
@@ -23,7 +23,8 @@
         "foregroundImage": "./assets/images/success-logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.abassthedev.successaudiototext"
+      "package": "com.abassthedev.successaudiototext",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "bundler": "metro",
