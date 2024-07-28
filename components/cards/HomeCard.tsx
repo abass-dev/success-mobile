@@ -1,7 +1,4 @@
-import {
-  View,
-  StyleSheet,
-} from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useRouter } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 import HomeCardItem from "./HomeCardItem";
@@ -15,13 +12,14 @@ const HomeCard = () => {
         backgroundImage={require("@/assets/images/card-right-bg.png")}
         Icon={<FontAwesome name="user-circle-o" size={40} color="white" />}
         text="Login"
+        goTo="LoginScreen"
       />
 
       <HomeCardItem
         backgroundImage={require("@/assets/images/card-left-bg.png")}
         Icon={<Entypo name="chat" size={40} color="white" />}
         text="Chat"
-        goTo="imageGallery"
+        goTo="ChatScreen"
       />
 
       <HomeCardItem

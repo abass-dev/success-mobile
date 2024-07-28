@@ -16,9 +16,7 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions": [
-        "READ_EXTERNAL_STORAGE"
-      ],
+      "permissions": ["READ_EXTERNAL_STORAGE"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/success-logo.png",
         "backgroundColor": "#ffffff"
@@ -32,7 +30,14 @@
       "favicon": "./assets/images/success-splash.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "@react-native-google-signin/google-signin",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app accesses your photos to let you share them with your friends."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

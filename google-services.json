@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "42775382076",
+    "firebase_url": "https://successcomniger-3581e-default-rtdb.firebaseio.com",
     "project_id": "successcomniger-3581e",
     "storage_bucket": "successcomniger-3581e.appspot.com"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.abassthedev.successaudiototext"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "42775382076-g0ctpqfdf8kd4snrdo33ppc4vth8sp3h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.abassthedev.successaudiototext",
+            "certificate_hash": "d23afb9ed6e6884043658c96876a5a0c3467e8b7"
+          }
+        },
+        {
+          "client_id": "42775382076-uik8j3ltn97501o1s0666tvf6sro6v10.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAY4h6jH1wq0r7qqpilMpxWm2vtSN_Lgm4"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "42775382076-uik8j3ltn97501o1s0666tvf6sro6v10.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
