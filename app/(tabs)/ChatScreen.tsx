@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { database } from "../../firebaseConfig"; // Correct import
 import { ref, onValue, push } from "firebase/database";
 import {
@@ -9,7 +9,10 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { useRouter } from "expo-router";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, ActivityIndicator, Image } from "react-native";
+import { Button, Header, Icon } from "react-native-elements";
+import { Colors } from "@/constants/Colors";
+import { StatusBar } from "expo-status-bar";
 
 export default function ChatScreen() {
   const [messages, setMessages] = useState([]);
@@ -85,8 +88,18 @@ export default function ChatScreen() {
     }
   };
 
+  const handleLogout = () => {
+    signOut(auth)
+      .then(() => {
+        navigation.replace("LoginScreen");
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
+  };
+
   if (loading) {
-    return <Text>Loading...</Text>;
+    return <ActivityIndicator size="large" />;
   }
 
   if (!user) {
@@ -105,13 +118,34 @@ export default function ChatScreen() {
 
   return (
     <View style={{ flex: 1 }}>
+      <StatusBar style="light" backgroundColor={Colors.dark.background} />
+      <Header
+        leftComponent={
+          <Icon
+            name="logout"
+            type="material"
+            color="#fff"
+            onPress={handleLogout}
+          />
+        }
+        centerComponent={{
+          text: "Chat",
+          style: { color: "#fff", fontSize: 20 },
+        }}
+        rightComponent={
+          user?.photoURL ? (
+            <Image source={{ uri: user.photoURL }} style={styles.avatar} />
+          ) : null
+        }
+        containerStyle={styles.headerContainer}
+      />
       <GiftedChat
         messages={messages}
         onSend={(messages) => onSend(messages)}
         user={{
           _id: user?.uid,
           name: user?.displayName,
-          avatar: user?.photoURL, // Optional: if the user's own avatar is already set
+          avatar: user?.photoURL,
         }}
       />
     </View>
@@ -129,5 +163,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: "center",
     marginBottom: 20,
+  },
+  headerContainer: {
+    backgroundColor: Colors.dark.background,
+    justifyContent: "space-around",
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
   },
 });

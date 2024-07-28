@@ -28,8 +28,33 @@ export default function SignUpScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [image, setImage] = useState(null);
+  const [errors, setErrors] = useState({});
+  const [emailExists, setEmailExists] = useState(false);
+
+  const validate = () => {
+    let valid = true;
+    let errors = {};
+
+    if (!fullName || fullName.length < 4) {
+      errors.fullName = "Full Name must be at least 4 characters.";
+      valid = false;
+    }
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      errors.email = "Please enter a valid email address.";
+      valid = false;
+    }
+    if (!password || password.length < 6) {
+      errors.password = "Password must be at least 6 characters.";
+      valid = false;
+    }
+
+    setErrors(errors);
+    return valid;
+  };
 
   const handleSignUp = async () => {
+    if (!validate()) return;
+
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -60,7 +85,11 @@ export default function SignUpScreen() {
 
       navigation.replace("ChatScreen");
     } catch (error) {
-      console.error("Error during sign-up:", error);
+      if (error.code === "auth/email-already-in-use") {
+        setEmailExists(true);
+      } else {
+        console.error("Error during sign-up:", error);
+      }
     }
   };
 
@@ -81,27 +110,34 @@ export default function SignUpScreen() {
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Create Account</Text>
+      <Text style={styles.title}>Create Success Account</Text>
       <TextInput
-        style={styles.input}
+        style={[styles.input, errors.fullName && styles.inputError]}
         placeholder="Full Name"
         value={fullName}
         onChangeText={setFullName}
       />
+      {errors.fullName && (
+        <Text style={styles.errorText}>{errors.fullName}</Text>
+      )}
       <TextInput
-        style={styles.input}
+        style={[styles.input, errors.email && styles.inputError]}
         placeholder="Email"
         value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
       />
+      {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
       <TextInput
-        style={styles.input}
+        style={[styles.input, errors.password && styles.inputError]}
         placeholder="Password"
         value={password}
         onChangeText={setPassword}
         secureTextEntry
       />
+      {errors.password && (
+        <Text style={styles.errorText}>{errors.password}</Text>
+      )}
       <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
         <Text style={styles.imagePickerText}>Select profile picture</Text>
       </TouchableOpacity>
@@ -109,6 +145,17 @@ export default function SignUpScreen() {
       <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
         <Text style={styles.signUpButtonText}>Sign Up</Text>
       </TouchableOpacity>
+      {emailExists && (
+        <View style={styles.emailExistsContainer}>
+          <Text style={styles.errorText}>Email already has an account. </Text>
+          <Text
+            style={styles.loginLink}
+            onPress={() => navigation.replace("LoginScreen")}
+          >
+            Go to login
+          </Text>
+        </View>
+      )}
       <Text
         onPress={() => navigation.replace("LoginScreen")}
         style={styles.toggleText}
@@ -141,6 +188,24 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     padding: 10,
     backgroundColor: "#fff",
+  },
+  inputError: {
+    borderColor: "red",
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 12,
+    marginTop: -12,
+    marginLeft: 5,
+    fontSize: 12,
+  },
+  emailExistsContainer: {
+    marginTop: 20,
+    alignItems: "center",
+  },
+  loginLink: {
+    color: "#007bff",
+    marginTop: 5,
   },
   imagePicker: {
     height: 50,

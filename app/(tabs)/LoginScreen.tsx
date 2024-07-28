@@ -1,6 +1,13 @@
-// LoginScreen.js
 import React, { useState, useEffect } from "react";
-import { View, TextInput, Button, Text, Image, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  Button,
+  Text,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -17,6 +24,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
+  const [errors, setErrors] = useState({});
 
   useEffect(() => {
     const unsubscribeAuth = onAuthStateChanged(auth, (authUser) => {
@@ -30,12 +38,35 @@ export default function LoginScreen() {
     return unsubscribeAuth;
   }, []);
 
+  const validate = () => {
+    let valid = true;
+    let errors = {};
+
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      errors.email = "Please enter a valid email address.";
+      valid = false;
+    }
+    if (!password) {
+      errors.password = "Password is required.";
+      valid = false;
+    }
+
+    setErrors(errors);
+    return valid;
+  };
+
   const handleLogin = async () => {
+    if (!validate()) return;
+
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigation.replace("ChatScreen");
     } catch (error) {
       console.error("Error during sign-in:", error);
+      setErrors((prevErrors) => ({
+        ...prevErrors,
+        firebase: "Invalid email or password.",
+      }));
     }
   };
 
@@ -58,25 +89,37 @@ export default function LoginScreen() {
           <Text style={styles.userInfo}>
             Welcome back, {user.displayName || "User"}
           </Text>
-          <Button title="Logout" onPress={handleLogout} />
+          <TouchableOpacity style={styles.button} onPress={handleLogout}>
+            <Text style={styles.buttonText}>Logout</Text>
+          </TouchableOpacity>
         </View>
       ) : (
         <>
+          <Text style={styles.title}>Login to Success</Text>
           <TextInput
-            style={styles.input}
+            style={[styles.input, errors.email && styles.inputError]}
             placeholder="Email"
             value={email}
             onChangeText={setEmail}
             keyboardType="email-address"
           />
+          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
           <TextInput
-            style={styles.input}
+            style={[styles.input, errors.password && styles.inputError]}
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
             secureTextEntry
           />
-          <Button title="Login" onPress={handleLogin} />
+          {errors.password && (
+            <Text style={styles.errorText}>{errors.password}</Text>
+          )}
+          {errors.firebase && (
+            <Text style={styles.errorText}>{errors.firebase}</Text>
+          )}
+          <TouchableOpacity style={styles.button} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login</Text>
+          </TouchableOpacity>
           <Text
             onPress={() => navigation.push("SignUpScreen")}
             style={styles.toggleText}
@@ -94,13 +137,45 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     padding: 16,
+    backgroundColor: "#f8f9fa",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 24,
+    textAlign: "center",
+    color: "#333",
   },
   input: {
-    height: 40,
-    borderColor: "gray",
+    height: 50,
+    borderColor: "#ccc",
     borderWidth: 1,
+    borderRadius: 8,
     marginBottom: 12,
-    padding: 8,
+    padding: 10,
+    backgroundColor: "#fff",
+  },
+  inputError: {
+    borderColor: "red",
+  },
+  errorText: {
+    color: "red",
+    marginBottom: 12,
+    marginTop: -12,
+    marginLeft: 5,
+    fontSize: 12,
+  },
+  button: {
+    backgroundColor: "#3D6DCC",
+    paddingVertical: 12,
+    borderRadius: 8,
+    marginBottom: 16,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 16,
+    fontWeight: "bold",
   },
   userContainer: {
     alignItems: "center",
@@ -114,10 +189,12 @@ const styles = StyleSheet.create({
   userInfo: {
     fontSize: 18,
     marginBottom: 16,
+    color: "#333",
   },
   toggleText: {
     marginTop: 16,
     textAlign: "center",
-    color: "blue",
+    color: "#3D6DCC",
+    fontSize: 16,
   },
 });
