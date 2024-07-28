@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import {
   View,
   TextInput,
-  Button,
   Text,
   Image,
   TouchableOpacity,
   StyleSheet,
   ScrollView,
 } from "react-native";
+import DateTimePicker from "@react-native-community/datetimepicker";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -18,6 +18,7 @@ import * as ImagePicker from "expo-image-picker";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "expo-router";
 import { app } from "../../firebaseConfig"; // Import the app instance from firebaseConfig
+import { FontAwesome } from "@expo/vector-icons";
 
 const auth = getAuth(app);
 const storage = getStorage(app);
@@ -27,16 +28,17 @@ export default function SignUpScreen() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [anniversary, setAnniversary] = useState(new Date());
+  const [showPicker, setShowPicker] = useState(false);
   const [image, setImage] = useState(null);
   const [errors, setErrors] = useState({});
-  const [emailExists, setEmailExists] = useState(false);
 
   const validate = () => {
     let valid = true;
     let errors = {};
 
     if (!fullName || fullName.length < 4) {
-      errors.fullName = "Full Name must be at least 4 characters.";
+      errors.fullName = "Full name must be at least 4 characters.";
       valid = false;
     }
     if (!email || !/\S+@\S+\.\S+/.test(email)) {
@@ -45,6 +47,10 @@ export default function SignUpScreen() {
     }
     if (!password || password.length < 6) {
       errors.password = "Password must be at least 6 characters.";
+      valid = false;
+    }
+    if (!anniversary) {
+      errors.anniversary = "Please select a valid anniversary date.";
       valid = false;
     }
 
@@ -66,29 +72,27 @@ export default function SignUpScreen() {
       let photoURL = null;
 
       if (image) {
-        console.log("Starting image upload...");
-
         const response = await fetch(image);
         const blob = await response.blob();
         const storageRef = ref(storage, `avatars/${user.uid}`);
         await uploadBytes(storageRef, blob);
 
         photoURL = await getDownloadURL(storageRef);
-        console.log("Image uploaded. Photo URL:", photoURL);
       }
 
       await updateProfile(user, {
         displayName: fullName,
         photoURL: photoURL,
       });
-      console.log("Profile updated with full name and photo URL.");
 
       navigation.replace("ChatScreen");
     } catch (error) {
+      console.error("Error during sign-up:", error);
       if (error.code === "auth/email-already-in-use") {
-        setEmailExists(true);
-      } else {
-        console.error("Error during sign-up:", error);
+        setErrors({
+          ...errors,
+          email: "Email already has an account. Please log in.",
+        });
       }
     }
   };
@@ -101,61 +105,105 @@ export default function SignUpScreen() {
       quality: 1,
     });
 
-    console.log(result);
-
     if (!result.canceled) {
-      setImage(result.assets[0].uri); // Correctly use 'uri' property from result
+      setImage(result.assets[0].uri);
     }
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Create Success Account</Text>
-      <TextInput
-        style={[styles.input, errors.fullName && styles.inputError]}
-        placeholder="Full Name"
-        value={fullName}
-        onChangeText={setFullName}
-      />
-      {errors.fullName && (
-        <Text style={styles.errorText}>{errors.fullName}</Text>
-      )}
-      <TextInput
-        style={[styles.input, errors.email && styles.inputError]}
-        placeholder="Email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
-      {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-      <TextInput
-        style={[styles.input, errors.password && styles.inputError]}
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
-      {errors.password && (
-        <Text style={styles.errorText}>{errors.password}</Text>
-      )}
+      <Text style={styles.title}>New Success Account</Text>
+
       <TouchableOpacity style={styles.imagePicker} onPress={pickImage}>
-        <Text style={styles.imagePickerText}>Select profile picture</Text>
+        <View style={styles.imageContainer}>
+          <Image
+            source={
+              image
+                ? { uri: image }
+                : require("@/assets/images/default-profile.png") // Use your default profile picture icon
+            }
+            style={styles.image}
+          />
+          <View style={styles.editIconContainer}>
+            <FontAwesome
+              name="edit"
+              size={20}
+              color={"white"}
+              style={styles.editIcon}
+            />
+          </View>
+        </View>
       </TouchableOpacity>
-      {image && <Image source={{ uri: image }} style={styles.image} />}
+
+      <View style={styles.row}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, errors.fullName && styles.inputError]}
+            placeholder="Full Name"
+            value={fullName}
+            onChangeText={setFullName}
+          />
+          {errors.fullName && (
+            <Text style={styles.errorText}>{errors.fullName}</Text>
+          )}
+        </View>
+        <View style={styles.inputContainer}>
+          <TouchableOpacity
+            style={[
+              styles.input,
+              styles.dateInput,
+              errors.anniversary && styles.inputError,
+            ]}
+            onPress={() => setShowPicker(true)}
+          >
+            <Text style={styles.dateText}>
+              {anniversary.toLocaleDateString()}
+            </Text>
+          </TouchableOpacity>
+          {errors.anniversary && (
+            <Text style={styles.errorText}>{errors.anniversary}</Text>
+          )}
+        </View>
+      </View>
+      {showPicker && (
+        <DateTimePicker
+          value={anniversary}
+          mode="date"
+          display="default"
+          onChange={(event, selectedDate) => {
+            const currentDate = selectedDate || anniversary;
+            setShowPicker(false);
+            setAnniversary(currentDate);
+          }}
+        />
+      )}
+      <View style={styles.row}>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, errors.email && styles.inputError]}
+            placeholder="Email"
+            value={email}
+            onChangeText={setEmail}
+            keyboardType="email-address"
+          />
+          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
+        </View>
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={[styles.input, errors.password && styles.inputError]}
+            placeholder="Password"
+            value={password}
+            onChangeText={setPassword}
+            secureTextEntry
+          />
+          {errors.password && (
+            <Text style={styles.errorText}>{errors.password}</Text>
+          )}
+        </View>
+      </View>
       <TouchableOpacity style={styles.signUpButton} onPress={handleSignUp}>
         <Text style={styles.signUpButtonText}>Sign Up</Text>
       </TouchableOpacity>
-      {emailExists && (
-        <View style={styles.emailExistsContainer}>
-          <Text style={styles.errorText}>Email already has an account. </Text>
-          <Text
-            style={styles.loginLink}
-            onPress={() => navigation.replace("LoginScreen")}
-          >
-            Go to login
-          </Text>
-        </View>
-      )}
       <Text
         onPress={() => navigation.replace("LoginScreen")}
         style={styles.toggleText}
@@ -180,6 +228,14 @@ const styles = StyleSheet.create({
     marginBottom: 24,
     textAlign: "center",
   },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  inputContainer: {
+    flex: 1,
+    marginHorizontal: 4,
+  },
   input: {
     height: 50,
     borderColor: "#ccc",
@@ -194,39 +250,46 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
-    marginBottom: 12,
-    marginTop: -12,
-    marginLeft: 5,
     fontSize: 12,
+    marginBottom: 8,
   },
-  emailExistsContainer: {
-    marginTop: 20,
-    alignItems: "center",
+  dateInput: {
+    justifyContent: "center",
   },
-  loginLink: {
-    color: "#007bff",
-    marginTop: 5,
+  dateText: {
+    color: "#333",
   },
   imagePicker: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 12,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#fff",
+    marginBottom: 16,
   },
-  imagePickerText: {
-    color: "#007bff",
-    fontSize: 16,
+  imageContainer: {
+    position: "relative",
   },
   image: {
     width: 100,
     height: 100,
     borderRadius: 50,
-    marginTop: 16,
-    alignSelf: "center",
+    resizeMode: "cover",
+    borderWidth: 2,
+    borderColor: "#ddd",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 4,
+  },
+  editIconContainer: {
+    position: "absolute",
+    right: 0,
+    bottom: 0,
+    backgroundColor: "#00000060",
+    borderRadius: 20,
+    padding: 5,
+  },
+  editIcon: {
+    padding: 5,
   },
   signUpButton: {
     height: 50,

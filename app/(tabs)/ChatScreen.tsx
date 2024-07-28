@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { GiftedChat } from "react-native-gifted-chat";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
-import { database } from "../../firebaseConfig"; // Correct import
+import { database, firestore } from "../../firebaseConfig"; // Correct import
 import { ref, onValue, push } from "firebase/database";
 import {
   getStorage,
@@ -129,7 +129,7 @@ export default function ChatScreen() {
           />
         }
         centerComponent={{
-          text: "Chat",
+          text: "Success Chat",
           style: { color: "#fff", fontSize: 20 },
         }}
         rightComponent={

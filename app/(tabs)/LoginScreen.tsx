@@ -16,6 +16,9 @@ import {
 } from "firebase/auth";
 import { useRouter } from "expo-router";
 import { app } from "../../firebaseConfig"; // Import the app instance from firebaseConfig
+import { Header, Icon } from "react-native-elements";
+import { Colors } from "@/constants/Colors";
+import { StatusBar } from "expo-status-bar";
 
 const auth = getAuth(app);
 
@@ -80,55 +83,76 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      {user ? (
-        <View style={styles.userContainer}>
-          {user.photoURL && (
-            <Image source={{ uri: user.photoURL }} style={styles.avatar} />
-          )}
-          <Text style={styles.userInfo}>
-            Welcome back, {user.displayName || "User"}
-          </Text>
-          <TouchableOpacity style={styles.button} onPress={handleLogout}>
-            <Text style={styles.buttonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <>
-          <Text style={styles.title}>Login to Success</Text>
-          <TextInput
-            style={[styles.input, errors.email && styles.inputError]}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
-            keyboardType="email-address"
+    <>
+      <Header
+        leftComponent={
+          <Icon
+            name="arrow-back"
+            color="#fff"
+            onPress={() => navigation.replace("/")}
           />
-          {errors.email && <Text style={styles.errorText}>{errors.email}</Text>}
-          <TextInput
-            style={[styles.input, errors.password && styles.inputError]}
-            placeholder="Password"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry
+        }
+        rightComponent={
+          <Image
+            source={require("@/assets/images/success-logo.png")} // Replace with your app logo path
+            style={styles.logo}
           />
-          {errors.password && (
-            <Text style={styles.errorText}>{errors.password}</Text>
-          )}
-          {errors.firebase && (
-            <Text style={styles.errorText}>{errors.firebase}</Text>
-          )}
-          <TouchableOpacity style={styles.button} onPress={handleLogin}>
-            <Text style={styles.buttonText}>Login</Text>
-          </TouchableOpacity>
-          <Text
-            onPress={() => navigation.push("SignUpScreen")}
-            style={styles.toggleText}
-          >
-            Don't have an account? Sign Up
-          </Text>
-        </>
-      )}
-    </View>
+        }
+        containerStyle={styles.header}
+      />
+      <StatusBar style="light" backgroundColor={Colors.dark.background} />
+      <View style={styles.container}>
+        {user ? (
+          <View style={styles.userContainer}>
+            {user.photoURL && (
+              <Image source={{ uri: user.photoURL }} style={styles.avatar} />
+            )}
+            <Text style={styles.userInfo}>
+              Welcome back, {user.displayName || "User"}
+            </Text>
+            <TouchableOpacity style={styles.button} onPress={handleLogout}>
+              <Text style={styles.buttonText}>Logout</Text>
+            </TouchableOpacity>
+          </View>
+        ) : (
+          <>
+            <Text style={styles.title}>Login to Success</Text>
+            <TextInput
+              style={[styles.input, errors.email && styles.inputError]}
+              placeholder="Email"
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+            {errors.email && (
+              <Text style={styles.errorText}>{errors.email}</Text>
+            )}
+            <TextInput
+              style={[styles.input, errors.password && styles.inputError]}
+              placeholder="Password"
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+            {errors.password && (
+              <Text style={styles.errorText}>{errors.password}</Text>
+            )}
+            {errors.firebase && (
+              <Text style={styles.errorText}>{errors.firebase}</Text>
+            )}
+            <TouchableOpacity style={styles.button} onPress={handleLogin}>
+              <Text style={styles.buttonText}>Login</Text>
+            </TouchableOpacity>
+            <Text
+              onPress={() => navigation.push("SignUpScreen")}
+              style={styles.toggleText}
+            >
+              Don't have an account? Sign Up
+            </Text>
+          </>
+        )}
+      </View>
+    </>
   );
 }
 
@@ -138,6 +162,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 16,
     backgroundColor: "#f8f9fa",
+  },
+  header: {
+    backgroundColor: Colors.dark.background,
+    justifyContent: "space-around",
+    borderBottomWidth: 0,
+  },
+  logo: {
+    width: 40,
+    height: 40,
+    resizeMode: "contain",
   },
   title: {
     fontSize: 24,
@@ -166,7 +200,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
   },
   button: {
-    backgroundColor: "#3D6DCC",
+    backgroundColor: Colors.dark.background,
     paddingVertical: 12,
     borderRadius: 8,
     marginBottom: 16,
