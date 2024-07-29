@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Success Com Niger",
-    "slug": "success-com-niger",
+    "slug": "success-audio-to-text",
     "version": "1.0.4",
     "orientation": "portrait",
     "icon": "./assets/images/success-logo.png",
@@ -16,9 +16,7 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions": [
-        "READ_EXTERNAL_STORAGE"
-      ],
+      "permissions": ["READ_EXTERNAL_STORAGE"],
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/success-logo.png",
         "backgroundColor": "#ffffff"
@@ -30,9 +28,7 @@
       "output": "static",
       "favicon": "./assets/images/success-splash.png"
     },
-    "plugins": [
-      "expo-router"
-    ],
+    "plugins": ["expo-router"],
     "experiments": {
       "typedRoutes": true
     },
